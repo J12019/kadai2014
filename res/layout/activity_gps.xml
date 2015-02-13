@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:text="@string/longitude" />
+        android:text="" />
 
     <Button
         android:id="@+id/button1"
@@ -38,25 +38,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/button1"
-        android:text="" >
+        android:text="@string/longitude" >
     </TextView>
 
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/editText2"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_above="@+id/button1"
         android:layout_centerHorizontal="true"
         android:ems="20" >
 
         <requestFocus />
     </EditText>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_toRightOf="@+id/textView3"
+        android:ems="10" />
 
 </RelativeLayout>

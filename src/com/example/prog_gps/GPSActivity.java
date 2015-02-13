@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -54,6 +55,7 @@ public class GPSActivity extends FragmentActivity implements LocationListener{
 	String lat, lng; //GPS情報送信時に利用
 	String p = new String();
 	String a = new String();
+	int t=0;
 	private GoogleMap mMap;
 	LatLng latlng = new LatLng(35.710065, 139.8107);
 	//private static final String url = "http://10.0.2.2/gps.php"; //エミュレータ使用時
@@ -79,6 +81,11 @@ public class GPSActivity extends FragmentActivity implements LocationListener{
 				editText.selectAll();
 				// エディットテキストのテキストを取得します
 				String text = editText.getText().toString();
+				EditText editText2 = (EditText) findViewById(id.editText2);
+				// エディットテキストのテキストを全選択します
+				editText2.selectAll();
+				// エディットテキストのテキストを取得します
+				String text2 = editText2.getText().toString();
 				// TODO Auto-generated method stub
 				//-----[クライアント設定]
 				/*HttpClient httpclient = new DefaultHttpClient();
@@ -99,11 +106,12 @@ public class GPSActivity extends FragmentActivity implements LocationListener{
 				//ArrayList <NameValuePair> params = new ArrayList <NameValuePair>();
 				List<NameValuePair> params = new ArrayList<NameValuePair>(1);
 
-				params.add( new BasicNameValuePair("name", text));
+				params.add( new BasicNameValuePair("title", text));
 				params.add( new BasicNameValuePair("postalcode", p));
 				params.add( new BasicNameValuePair("address", a));
 				params.add( new BasicNameValuePair("latitude", lat));
 				params.add( new BasicNameValuePair("longitude", lng));
+				params.add( new BasicNameValuePair("name", text2));
 
 				HttpResponse res = null;
 
@@ -122,17 +130,19 @@ public class GPSActivity extends FragmentActivity implements LocationListener{
 						//tv.setText(byteArrayOutputStream.toString());
 						//Toast.makeText(getBaseContext(), "Finish", Toast.LENGTH_SHORT).show();
 						// Toastのインスタンスを生成
-						Toast toast = Toast.makeText(getBaseContext(), "Finish", Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(getBaseContext(), "Finish", Toast.LENGTH_SHORT);
 						// 表示位置を設定
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						// メッセージを表示
 						toast.show();
+						Intent intent = new Intent(GPSActivity.this,Top.class );startActivity(intent);
+						finish(); // アクティビティ終了
 					}
 					else
 					{
 						//Toast.makeText(getBaseContext(), "error", Toast.LENGTH_LONG).show();
 						// Toastのインスタンスを生成
-						Toast toast = Toast.makeText(getBaseContext(), "error", Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(getBaseContext(), "error", Toast.LENGTH_SHORT);
 						// 表示位置を設定
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						// メッセージを表示
@@ -197,12 +207,13 @@ public class GPSActivity extends FragmentActivity implements LocationListener{
 		ReverseGeocode rg = new ReverseGeocode();
 		try {
 			string = rg.point2address(this,location.getLatitude(), location.getLongitude()) + "付近";
-			p=(string.substring(0,9));
+			p=(string.substring(1,9));
 			a=(string.substring(10-1));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+		if(t==0){
+		Toast.makeText(this, string, Toast.LENGTH_LONG).show();t=1;}
 	}
 	@Override
 	public void onProviderDisabled(String provider) {
